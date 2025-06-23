@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulário de Sala de Aula</title>
+</head>
+<body>
+    <h1>Formulário de Sala de Aula</h1>
+    <form action="#" th:action="@{/salas/salvar}" th:object="${sala}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        
+        <div>
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" />
+        </div>
+        
+        <div>
+            <label>Bloco:</label>
+            <input type="text" th:field="*{bloco}" />
+        </div>
+
+        <div>
+            <label>Capacidade:</label>
+            <input type="number" th:field="*{capacidade}" />
+        </div>
+        
+        <div>
+            <button type="submit">Salvar</button>
+        </div>
+    </form>
+    <br/>
+    <a href="/salas">Voltar para a Lista de Salas</a>
+</body>
+</html>

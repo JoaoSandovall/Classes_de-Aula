@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalhes da Sala</title>
+</head>
+<body>
+    <h1 th:text="|Detalhes da Sala: ${sala.nome}|">Detalhes da Sala</h1>
+    <p><strong>Bloco:</strong> <span th:text="${sala.bloco}"></span></p>
+    <p><strong>Ocupação:</strong> <span th:text="${sala.alunos.size()}"></span> / <span th:text="${sala.capacidade}"></span></p>
+    <hr/>
+
+    <h2>Professor Responsável</h2>
+    <div th:if="${sala.professor != null}">
+        <p><strong>Professor Atual:</strong> <span th:text="${sala.professor.nome}"></span></p>
+    </div>
+    <div th:unless="${sala.professor != null}">
+        <p>Nenhum professor vinculado.</p>
+    </div>
+    <form th:action="@{/salas/{id}/vincular-professor(id=${sala.id})}" method="post">
+        <select name="professorId">
+            <option value="">Selecione um professor para vincular</option>
+            <option th:each="prof : ${todosOsProfessores}"
+                    th:value="${prof.id}"
+                    th:text="${prof.nome}"></option>
+        </select>
+        <button type="submit">Vincular Professor</button>
+    </form>
+    <hr/>
+
+    <h2>Adicionar Novo Aluno à Sala</h2>
+    <div th:if="${sala.alunos.size() >= sala.capacidade}">
+        <p style="color:red;">A sala atingiu a capacidade máxima!</p>
+    </div>
+    <form th:unless="${sala.alunos.size() >= sala.capacidade}" th:action="@{/salas/{id}/adicionar-aluno(id=${sala.id})}" th:object="${novoAluno}" method="post">
+        <div>
+            <label>Nome do Aluno:</label>
+            <input type="text" th:field="*{nome}" />
+        </div>
+        <div>
+            <label>Matrícula:</label>
+            <input type="text" th:field="*{matricula}" />
+        </div>
+        <button type="submit">Adicionar Aluno</button>
+    </form>
+    <hr/>
+
+    <h2>Alunos na Sala</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Matrícula</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="aluno : ${sala.alunos}">
+                <td th:text="${aluno.id}"></td>
+                <td th:text="${aluno.nome}"></td>
+                <td th:text="${aluno.matricula}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a href="/salas">Voltar para a Lista de Salas</a>
+</body>
+</html>

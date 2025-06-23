@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Salas de Aula</title>
+</head>
+<body>
+    <h1>Lista de Salas de Aula</h1>
+    <a href="/salas/novo">Adicionar Nova Sala</a>
+    <br/><br/>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Bloco</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="sala : ${salas}">
+                <td th:text="${sala.id}">1</td>
+                <td th:text="${sala.nome}">Nome da Sala</td>
+                <td th:text="${sala.bloco}">Bloco</td>
+                <td>
+                    <a th:href="@{/salas/editar/{id}(id=${sala.id})}">Editar</a>
+                    <a th:href="@{/salas/deletar/{id}(id=${sala.id})}">Deletar</a>
+                    <a th:href="@{/salas/{id}(id=${sala.id})}">Ver Detalhes</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a href="/alunos">Ver Lista de Alunos</a>
+    <br/>
+    <a href="/professores">Ver Lista de Professores</a>
+</body>
+</html>
