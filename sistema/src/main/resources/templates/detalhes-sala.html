@@ -1,67 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Detalhes da Sala</title>
-</head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head(title='Detalhes da Sala')}"></head>
+
 <body>
-    <h1 th:text="|Detalhes da Sala: ${sala.nome}|">Detalhes da Sala</h1>
-    <p><strong>Bloco:</strong> <span th:text="${sala.bloco}"></span></p>
-    <p><strong>Ocupação:</strong> <span th:text="${sala.alunos.size()}"></span> / <span th:text="${sala.capacidade}"></span></p>
-    <hr/>
+    <nav th:replace="~{fragments :: navbar}"></nav>
 
-    <h2>Professor Responsável</h2>
-    <div th:if="${sala.professor != null}">
-        <p><strong>Professor Atual:</strong> <span th:text="${sala.professor.nome}"></span></p>
-    </div>
-    <div th:unless="${sala.professor != null}">
-        <p>Nenhum professor vinculado.</p>
-    </div>
-    <form th:action="@{/salas/{id}/vincular-professor(id=${sala.id})}" method="post">
-        <select name="professorId">
-            <option value="">Selecione um professor para vincular</option>
-            <option th:each="prof : ${todosOsProfessores}"
-                    th:value="${prof.id}"
-                    th:text="${prof.nome}"></option>
-        </select>
-        <button type="submit">Vincular Professor</button>
-    </form>
-    <hr/>
-
-    <h2>Adicionar Novo Aluno à Sala</h2>
-    <div th:if="${sala.alunos.size() >= sala.capacidade}">
-        <p style="color:red;">A sala atingiu a capacidade máxima!</p>
-    </div>
-    <form th:unless="${sala.alunos.size() >= sala.capacidade}" th:action="@{/salas/{id}/adicionar-aluno(id=${sala.id})}" th:object="${novoAluno}" method="post">
-        <div>
-            <label>Nome do Aluno:</label>
-            <input type="text" th:field="*{nome}" />
+    <main class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 th:text="|Detalhes da Sala: ${sala.nome}|"></h1>
+            <a href="/salas" class="btn btn-secondary">Voltar para a Lista</a>
         </div>
-        <div>
-            <label>Matrícula:</label>
-            <input type="text" th:field="*{matricula}" />
-        </div>
-        <button type="submit">Adicionar Aluno</button>
-    </form>
-    <hr/>
+        <p class="lead"><strong>Bloco:</strong> <span th:text="${sala.bloco}"></span></p>
+        <hr>
 
-    <h2>Alunos na Sala</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Matrícula</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="aluno : ${sala.alunos}">
-                <td th:text="${aluno.id}"></td>
-                <td th:text="${aluno.nome}"></td>
-                <td th:text="${aluno.matricula}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <br/>
-    <a href="/salas">Voltar para a Lista de Salas</a>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Gerenciar Sala</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Professor Responsável</h5>
+                        <p th:if="${sala.professor}" class="card-text">
+                            <strong>Professor Atual:</strong> <span th:text="${sala.professor.nome}"></span>
+                        </p>
+                        <p th:unless="${sala.professor}" class="card-text text-muted">
+                            Nenhum professor vinculado.
+                        </p>
+                        <form th:action="@{/salas/{id}/vincular-professor(id=${sala.id})}" method="post" class="mb-4">
+                            <label for="professorId" class="form-label">Vincular novo professor:</label>
+                            <select name="professorId" id="professorId" class="form-select">
+                                <option value="">Selecione...</option>
+                                <option th:each="prof : ${todosOsProfessores}" th:value="${prof.id}" th:text="${prof.nome}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Vincular</button>
+                        </form>
+                        <hr>
+
+                        <h5 class="card-title">Adicionar Novo Aluno</h5>
+                        <div th:if="${sala.alunos.size() >= sala.capacidade}" class="alert alert-danger">
+                            A sala atingiu a capacidade máxima!
+                        </div>
+                        <form th:unless="${sala.alunos.size() >= sala.capacidade}" th:action="@{/salas/{id}/adicionar-aluno(id=${sala.id})}" th:object="${novoAluno}" method="post">
+                            <div class="mb-2">
+                                <label for="nomeAluno" class="form-label">Nome do Aluno:</label>
+                                <input type="text" id="nomeAluno" class="form-control" th:field="*{nome}" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="matriculaAluno" class="form-label">Matrícula:</label>
+                                <input type="text" id="matriculaAluno" class="form-control" th:field="*{matricula}" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Adicionar Aluno</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h3>Alunos na Sala <span class="badge bg-info" th:text="|${sala.alunos.size()} / ${sala.capacidade}|"></span></h3>
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="aluno : ${sala.alunos}">
+                            <td th:text="${aluno.id}"></td>
+                            <td th:text="${aluno.nome}"></td>
+                            <td th:text="${aluno.matricula}"></td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(sala.alunos)}">
+                            <td colspan="3" class="text-center text-muted">Nenhum aluno matriculado nesta sala.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

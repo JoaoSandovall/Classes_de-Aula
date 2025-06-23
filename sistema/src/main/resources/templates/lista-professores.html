@@ -1,34 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Lista de Professores</title>
-</head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head(title='Lista de Professores')}"></head>
+
 <body>
-    <h1>Lista de Professores</h1>
-    <a href="/professores/novo">Adicionar Novo Professor</a>
-    <br/><br/>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Disciplina</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="professor : ${professores}">
-                <td th:text="${professor.id}">1</td>
-                <td th:text="${professor.nome}">Nome do Professor</td>
-                <td th:text="${professor.disciplina}">Disciplina</td>
-                <td>
-                    <a th:href="@{/professores/editar/{id}(id=${professor.id})}">Editar</a>
-                    <a th:href="@{/professores/deletar/{id}(id=${professor.id})}">Deletar</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br/>
-    <a href="/alunos">Ver Lista de Alunos</a>
+    <nav th:replace="~{fragments :: navbar}"></nav>
+
+    <main class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Lista de Professores</h1>
+            <a href="/professores/novo" class="btn btn-success">Adicionar Novo Professor</a>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Disciplina</th>
+                    <th>Salas Responsáveis</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="professor : ${professores}">
+                    <td th:text="${professor.id}"></td>
+                    <td th:text="${professor.nome}"></td>
+                    <td th:text="${professor.disciplina}"></td>
+                    <td>
+                        <th:block th:if="${!#lists.isEmpty(professor.salasDeAula)}">
+                            <span th:each="sala, iterStat : ${professor.salasDeAula}">
+                                <a th:href="@{/salas/{id}(id=${sala.id})}" th:text="${sala.nome}" class="badge bg-info text-decoration-none"></a>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </span>
+                        </th:block>
+                        <span th:if="${#lists.isEmpty(professor.salasDeAula)}" class="text-muted">
+                            Nenhuma sala
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/professores/editar/{id}(id=${professor.id})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/professores/deletar/{id}(id=${professor.id})}" class="btn btn-danger btn-sm">Deletar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

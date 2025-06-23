@@ -1,32 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Lista de Alunos</title>
-</head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head(title='Lista de Alunos')}"></head>
+
 <body>
-    <h1>Lista de Alunos</h1>
-    <a href="/alunos/novo">Adicionar Novo Aluno</a>
-    <br/><br/>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Matrícula</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="aluno : ${alunos}">
-                <td th:text="${aluno.id}">1</td>
-                <td th:text="${aluno.nome}">Nome do Aluno</td>
-                <td th:text="${aluno.matricula}">2025001</td>
-                <td>
-                    <a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a>
-                    <a th:href="@{/alunos/deletar/{id}(id=${aluno.id})}">Deletar</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <nav th:replace="~{fragments :: navbar}"></nav>
+
+    <main class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Lista de Alunos</h1>
+            <a href="/alunos/novo" class="btn btn-success">Adicionar Novo Aluno</a>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>Sala de Aula</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="aluno : ${alunos}">
+                    <td th:text="${aluno.id}"></td>
+                    <td th:text="${aluno.nome}"></td>
+                    <td th:text="${aluno.matricula}"></td>
+                    <td>
+                        <span th:if="${aluno.salaDeAula}" th:text="${aluno.salaDeAula.nome}"></span>
+                        <span th:unless="${aluno.salaDeAula}" class="text-muted">Sem sala</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/alunos/editar/{id}(id=${aluno.id})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/alunos/deletar/{id}(id=${aluno.id})}" class="btn btn-danger btn-sm">Deletar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Sistema de Gestão Escolar</title>
-</head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head(title='Página Inicial')}">
+    </head>
+
 <body>
-    <h1>Bem-vindo ao Sistema de Gestão Escolar</h1>
-    <h2>Navegue pelas seções:</h2>
-    <ul>
-        <li><a href="/alunos">Gerenciar Alunos</a></li>
-        <li><a href="/professores">Gerenciar Professores</a></li>
-        <li><a href="/salas">Gerenciar Salas de Aula</a></li>
-    </ul>
+    <nav th:replace="~{fragments :: navbar}"></nav>
+
+    <main class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Bem-vindo ao Sistema de Gestão Escolar</h1>
+                <p class="col-md-8 fs-4">Utilize o menu de navegação acima para gerenciar alunos, professores e salas de aula.</p>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h2>Alunos</h2>
+                <p>Gerencie o cadastro de todos os alunos.</p>
+                <p><a class="btn btn-primary" href="/alunos" role="button">Ver Alunos &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Professores</h2>
+                <p>Gerencie o cadastro de professores do sistema.</p>
+                <p><a class="btn btn-primary" href="/professores" role="button">Ver Professores &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Salas de Aula</h2>
+                <p>Gerencie as salas, sua capacidade e vínculos.</p>
+                <p><a class="btn btn-primary" href="/salas" role="button">Ver Salas &raquo;</a></p>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

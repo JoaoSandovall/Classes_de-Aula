@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Lista de Salas de Aula</title>
-</head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head(title='Lista de Salas de Aula')}"></head>
+
 <body>
-    <h1>Lista de Salas de Aula</h1>
-    <a href="/salas/novo">Adicionar Nova Sala</a>
-    <br/><br/>
-    <table border="1">
-        <thead>
+    <nav th:replace="~{fragments :: navbar}"></nav>
+
+    <main class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Lista de Salas de Aula</h1>
+            <a href="/salas/novo" class="btn btn-success">Adicionar Nova Sala</a>
+        </div>
+        
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Bloco</th>
+                <th>Ocupação</th>
                 <th>Ações</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="sala : ${salas}">
-                <td th:text="${sala.id}">1</td>
-                <td th:text="${sala.nome}">Nome da Sala</td>
-                <td th:text="${sala.bloco}">Bloco</td>
+                <td th:text="${sala.id}"></td>
+                <td th:text="${sala.nome}"></td>
+                <td th:text="${sala.bloco}"></td>
+                <td th:text="|${sala.alunos.size()} / ${sala.capacidade}|"></td>
                 <td>
-                    <a th:href="@{/salas/editar/{id}(id=${sala.id})}">Editar</a>
-                    <a th:href="@{/salas/deletar/{id}(id=${sala.id})}">Deletar</a>
-                    <a th:href="@{/salas/{id}(id=${sala.id})}">Ver Detalhes</a>
+                    <a th:href="@{/salas/editar/{id}(id=${sala.id})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/salas/deletar/{id}(id=${sala.id})}" class="btn btn-danger btn-sm">Deletar</a>
+                    <a th:href="@{/salas/{id}(id=${sala.id})}" class="btn btn-info btn-sm">Ver Detalhes</a>
                 </td>
             </tr>
-        </tbody>
-    </table>
-    <br/>
-    <a href="/alunos">Ver Lista de Alunos</a>
-    <br/>
-    <a href="/professores">Ver Lista de Professores</a>
+            </tbody>
+        </table>
+    </main>
+
+    <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>
