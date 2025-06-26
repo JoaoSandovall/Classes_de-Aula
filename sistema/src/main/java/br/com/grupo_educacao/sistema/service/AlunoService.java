@@ -1,4 +1,3 @@
-// no arquivo src/main/java/br/com/grupo_educacao/sistema/service/AlunoService.java
 package br.com.grupo_educacao.sistema.service;
 
 import br.com.grupo_educacao.sistema.model.Aluno;

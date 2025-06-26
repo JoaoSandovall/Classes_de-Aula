@@ -1,4 +1,3 @@
-// no arquivo controller/SalaDeAulaController.java
 package br.com.grupo_educacao.sistema.controller;
 
 import br.com.grupo_educacao.sistema.model.SalaDeAula;
@@ -59,13 +58,7 @@ public class SalaDeAulaController {
 
     @Autowired
     private AlunoService alunoService;
-    // --- FIM DAS NOVAS INJEÇÕES ---
 
-
-    // ... (Mantenha os métodos @GetMapping e outros que já existem) ...
-
-
-    // --- MÉTODO NOVO PARA EXIBIR DETALHES DA SALA ---
     @GetMapping("/{id}")
     public String verDetalhesDaSala(@PathVariable Long id, Model model) {
         SalaDeAula sala = salaDeAulaService.buscarPorId(id);
@@ -109,8 +102,6 @@ public String adicionarAlunoNaSala(@PathVariable Long salaId, Aluno novoAluno) {
         novoAluno.setSalaDeAula(sala);
         alunoService.salvar(novoAluno);
     }
-    // Se a sala estiver cheia, simplesmente não faz nada e redireciona.
-    // Numa aplicação real, mostraríamos uma mensagem de erro.
     return "redirect:/salas/" + salaId;
 }
 

@@ -1,4 +1,3 @@
-// no arquivo model/SalaDeAula.java
 package br.com.grupo_educacao.sistema.model;
 
 import jakarta.persistence.*;
@@ -21,7 +20,7 @@ public class SalaDeAula {
     @OneToMany(mappedBy = "salaDeAula")
     private List<Aluno> alunos;
 
-    // --- GETTERS E SETTERS FALTANTES ---
+    // --- GETTERS E SETTERS ---
 
     public Long getId() {
         return id;

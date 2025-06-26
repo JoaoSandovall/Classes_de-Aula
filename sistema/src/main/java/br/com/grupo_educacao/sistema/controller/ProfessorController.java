@@ -1,4 +1,3 @@
-// no arquivo controller/ProfessorController.java
 package br.com.grupo_educacao.sistema.controller;
 
 import br.com.grupo_educacao.sistema.model.Professor;

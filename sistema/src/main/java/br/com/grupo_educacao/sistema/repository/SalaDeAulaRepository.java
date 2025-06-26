@@ -1,4 +1,3 @@
-// no arquivo repository/SalaDeAulaRepository.java
 package br.com.grupo_educacao.sistema.repository;
 
 import br.com.grupo_educacao.sistema.model.SalaDeAula;

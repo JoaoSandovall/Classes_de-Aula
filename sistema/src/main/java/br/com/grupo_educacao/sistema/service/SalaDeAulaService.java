@@ -1,4 +1,3 @@
-// no arquivo service/SalaDeAulaService.java
 package br.com.grupo_educacao.sistema.service;
 
 import br.com.grupo_educacao.sistema.model.SalaDeAula;

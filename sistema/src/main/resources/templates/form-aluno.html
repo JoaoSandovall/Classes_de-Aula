@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments :: head(title='Formulário de Sala de Aula')}"></head>
+<head th:replace="~{fragments :: head(title='Formulário de Aluno')}"></head>
 
 <body>
     <nav th:replace="~{fragments :: navbar}"></nav>
 
     <main class="container">
-        <h1>Formulário de Sala de Aula</h1>
+        <h1>Formulário de Aluno</h1>
         <hr>
-        <form th:action="@{/salas/salvar}" th:object="${sala}" method="post">
+        <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
             <input type="hidden" th:field="*{id}" />
 
             <div class="mb-3">
@@ -18,20 +18,16 @@
             </div>
 
             <div class="mb-3">
-                <label for="bloco" class="form-label">Bloco:</label>
-                <input type="text" id="bloco" class="form-control" th:field="*{bloco}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="capacidade" class="form-label">Capacidade:</label>
-                <input type="number" id="capacidade" class="form-control" th:field="*{capacidade}" required>
+                <label for="matricula" class="form-label">Matrícula:</label>
+                <input type="text" id="matricula" class="form-control" th:field="*{matricula}" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="/salas" class="btn btn-secondary">Cancelar</a>
+            <a href="/alunos" class="btn btn-secondary">Cancelar</a>
         </form>
     </main>
 
     <div th:replace="~{fragments :: scripts}"></div>
 </body>
+
 </html>

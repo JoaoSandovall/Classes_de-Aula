@@ -1,4 +1,3 @@
-// no arquivo repository/ProfessorRepository.java
 package br.com.grupo_educacao.sistema.repository;
 
 import br.com.grupo_educacao.sistema.model.Professor;

@@ -1,4 +1,3 @@
-// no arquivo model/Aluno.java
 package br.com.grupo_educacao.sistema.model;
 
 import jakarta.persistence.*;
